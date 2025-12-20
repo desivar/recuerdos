@@ -19,3 +19,4 @@ const ResultCard = ({ record }) => {
     </div>
   );
 };
+export default ResultCard;
