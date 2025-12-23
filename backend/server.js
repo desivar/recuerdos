@@ -1,3 +1,5 @@
+const cors = require('cors');
+app.use(cors()); // This allows the Frontend to talk to the Backend
 app.get('/api/search', async (req, res) => {
   try {
     const { name, category, recordType, letter } = req.query;
