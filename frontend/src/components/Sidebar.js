@@ -6,7 +6,7 @@ const Sidebar = () => {
   const linkStyle = {
     color: '#EFE7DD',
     textDecoration: 'none',
-    padding: '5px 0',
+    padding: '7px 0',
     display: 'block',
     fontSize: '1rem'
   };
@@ -14,7 +14,7 @@ const Sidebar = () => {
   const headerStyle = {
     fontSize: '0.8rem',
     color: '#ACA37E',
-    marginTop: '15px',
+    marginTop: '20px',
     textTransform: 'uppercase'
   };
 
@@ -35,7 +35,7 @@ const Sidebar = () => {
         <Link to="/category/Portrait" style={linkStyle}>👤Portrait</Link>
         <Link to="/category/News" style={linkStyle}>📰 News & Clippings</Link>
         
-        <h3 style={headerStyle}>News about VItal Records</h3>
+        <h3 style={headerStyle}>News about Vital Records</h3>
         <Link to="/type/Birth" style={linkStyle}>🍼 Births (DOB)</Link>
         <Link to="/type/Marriage" style={linkStyle}>💍 Marriages</Link>
         <Link to="/type/Death" style={linkStyle}>⚰️ Deaths (DOD)</Link>

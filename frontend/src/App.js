@@ -10,7 +10,7 @@ function App() {
     <Router>
       <div style={{ display: 'flex' }}>
         <Sidebar />
-        <div style={{ marginLeft: '260px', flex: 1 }}>
+        <div style={{ marginLeft: '320px', flex: 1 }}>
           <Routes>
             {/* Main Pages */}
             <Route path="/" element={<SearchPage />} />
