@@ -35,7 +35,7 @@ const Sidebar = () => {
         <Link to="/category/Portrait" style={linkStyle}>👤 Portraits</Link>
         <Link to="/category/News" style={linkStyle}>📰 News & Clippings</Link>
         
-        <h3 style={headerStyle}>VITAL RECORDS</h3>
+        <h3 style={headerStyle}>News about VItal Records</h3>
         <Link to="/type/Birth" style={linkStyle}>🍼 Births (DOB)</Link>
         <Link to="/type/Marriage" style={linkStyle}>💍 Marriages</Link>
         <Link to="/type/Death" style={linkStyle}>⚰️ Deaths (DOD)</Link>
