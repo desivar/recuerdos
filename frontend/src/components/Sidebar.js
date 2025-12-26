@@ -23,7 +23,7 @@ const Sidebar = () => {
       width: '260px', backgroundColor: '#737958', color: '#EFE7DD', 
       height: '100vh', padding: '20px', position: 'fixed', overflowY: 'auto' 
     }}>
-      <h2 style={{ fontFamily: 'serif', borderBottom: '1px solid #ACA37E' }}>ARCHIVE</h2>
+      <h2 style={{ fontFamily: 'serif', borderBottom: '1px solid #ACA37E' }}>Newspaper Archive</h2>
       
       <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
         <Link to="/" style={linkStyle}>🏠 Home / Search</Link>
@@ -32,7 +32,7 @@ const Sidebar = () => {
         <hr style={{ borderColor: '#ACA37E', width: '100%' }} />
         
         <h3 style={headerStyle}>COLLECTIONS</h3>
-        <Link to="/category/Portrait" style={linkStyle}>👤 Portraits</Link>
+        <Link to="/category/Portrait" style={linkStyle}>👤Portrait</Link>
         <Link to="/category/News" style={linkStyle}>📰 News & Clippings</Link>
         
         <h3 style={headerStyle}>News about VItal Records</h3>
