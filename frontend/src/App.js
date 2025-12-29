@@ -34,7 +34,7 @@ function App() {
         <Sidebar user={user} onLogout={handleLogout} />
         
         <div style={{ 
-          marginLeft: '260px', 
+          marginLeft: '300px', 
           flex: 1,
           minHeight: '100vh'
         }}>
