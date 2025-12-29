@@ -5,7 +5,7 @@ import SearchPage from './pages/SearchPage';
 import UploadPage from './pages/UploadPage';
 import CollectionView from './pages/CollectionView';
 import RecordDetail from './pages/RecordDetail';
-import Login from './pages/Login';
+import Login from './pages/LoginPage';
 import Register from './pages/Register';
 import Contact from './pages/Contact';
 
