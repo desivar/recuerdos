@@ -9,7 +9,7 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/login', form);
+      const res = await axios.post('http://localhost:5500/api/login', form);
       localStorage.setItem('archiveUser', res.data.username); // Save session
       navigate('/');
       window.location.reload(); // Refresh to update Sidebar
