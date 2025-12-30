@@ -58,7 +58,7 @@ const UploadPage = () => {
     });
 
     if (name === 'category') {
-      if (['Birth', 'Death', 'Marriage'].includes(value)) {
+      if (['Birth News', 'Death News', 'Marriage News'].includes(value)) {
         setFormData({
           ...formData,
           category: value,
