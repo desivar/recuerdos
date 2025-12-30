@@ -187,7 +187,7 @@ const Sidebar = ({ user, onLogout }) => {
           onMouseEnter={(e) => e.target.style.paddingLeft = '10px'}
           onMouseLeave={(e) => e.target.style.paddingLeft = '0'}
         >
-          🍼 Births (DOB)
+          🍼 News about Births (DOB)
         </Link>
         <Link 
           to="/type/Marriage" 
@@ -195,7 +195,7 @@ const Sidebar = ({ user, onLogout }) => {
           onMouseEnter={(e) => e.target.style.paddingLeft = '10px'}
           onMouseLeave={(e) => e.target.style.paddingLeft = '0'}
         >
-          💍 Marriages
+          💍News about  Marriages
         </Link>
         <Link 
           to="/type/Death" 
@@ -203,7 +203,7 @@ const Sidebar = ({ user, onLogout }) => {
           onMouseEnter={(e) => e.target.style.paddingLeft = '10px'}
           onMouseLeave={(e) => e.target.style.paddingLeft = '0'}
         >
-          ⚰️ Deaths (DOD)
+          ⚰️ News about Deaths (DOD)
         </Link>
       </nav>
 
