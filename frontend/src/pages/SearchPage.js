@@ -1,40 +1,92 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Make sure you installed this!
+import axios from 'axios';
 import ResultCard from '../components/ResultCard';
 
 const SearchPage = () => {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]); // Start with an empty list
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const handleSearch = async () => {
+  // Load all records when the page first opens
+  useEffect(() => {
+    fetchAllRecords();
+  }, []);
+
+  const fetchAllRecords = async () => {
+    setLoading(true);
     try {
-      // This calls your REAL backend we built earlier
+      const response = await axios.get(`http://localhost:5000/api/search`);
+      setResults(response.data);
+    } catch (error) {
+      console.error("Error loading archive:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = async (e) => {
+    if (e) e.preventDefault(); // Prevent page reload if inside a form
+    setLoading(true);
+    try {
       const response = await axios.get(`http://localhost:5000/api/search?name=${query}`);
-      
-      // Using setResults here makes the warning go away!
-      setResults(response.data); 
+      setResults(response.data);
     } catch (error) {
       console.error("Error fetching from database:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div style={{ backgroundColor: '#EFE7DD', minHeight: '100vh', padding: '20px' }}>
-      <input 
-        type="text" 
-        placeholder="Search Real Records..." 
-        onChange={(e) => setQuery(e.target.value)} 
-      />
-      <button onClick={handleSearch}>Search Archive</button>
+    <div style={{ padding: '40px', maxWidth: '1200px', margin: '0 auto' }}>
+      <h1 style={{ color: '#737958', marginBottom: '20px' }}>Recuerdos de Honduras</h1>
+      
+      {/* Search Input Group */}
+      <div style={{ display: 'flex', gap: '10px', marginBottom: '30px' }}>
+        <input 
+          type="text" 
+          placeholder="Search by name (e.g. Gravina)..." 
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && handleSearch()} // Search on Enter key
+          style={{ 
+            padding: '12px', 
+            flex: 1, 
+            borderRadius: '6px', 
+            border: '1px solid #737958',
+            fontSize: '1rem' 
+          }}
+        />
+        <button 
+          onClick={handleSearch}
+          style={{ 
+            padding: '12px 24px', 
+            backgroundColor: '#737958', 
+            color: 'white', 
+            border: 'none', 
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontWeight: 'bold'
+          }}
+        >
+          {loading ? 'Searching...' : 'Search Archive'}
+        </button>
+      </div>
 
-      <div>
+      {/* Results Grid */}
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
+        gap: '20px' 
+      }}>
         {results.length > 0 ? (
           results.map(record => <ResultCard key={record._id} record={record} />)
         ) : (
-          <p>No real records found yet. Try uploading one!</p>
+          !loading && <p style={{ textAlign: 'center', color: '#666' }}>No real records found. Try a different name!</p>
         )}
       </div>
     </div>
   );
 };
+
 export default SearchPage;

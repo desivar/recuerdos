@@ -332,8 +332,13 @@ app.get('/api/stats', async (req, res) => {
 
 // ========== SERVER START ==========
 
-const PORT = process.env.PORT || 5000;
+const PORT = 5000; 
+
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📁 Uploads directory: ${path.join(__dirname, 'uploads')}`);
+  console.log(`🚀 SERVER IS NOW ON PORT: ${PORT}`);
+});
+// Add this temporarily to server.js to see your users
+app.get('/api/debug-users', async (req, res) => {
+  const users = await User.find({}, 'username password role');
+  res.json(users);
 });

@@ -1,45 +1,38 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import ResultCard from '../components/ResultCard';
+import React from 'react';
 
-const SearchPage = () => {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
-
-  const handleSearch = async () => {
-    try {
-      const response = await axios.get(`http://localhost:5000/api/search?name=${query}`);
-      setResults(response.data);
-    } catch (error) {
-      console.error("Database connection error:", error);
-    }
-  };
-
+const ResultCard = ({ record }) => {
   return (
-    <div style={{ backgroundColor: '#EFE7DD', minHeight: '100vh', padding: '20px' }}>
-      <h1 style={{ color: '#737958', textAlign: 'center' }}>Recuerdos de Honduras</h1>
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '40px' }}>
-        <input 
-          type="text" 
-          placeholder="Search Surname..." 
-          onChange={(e) => setQuery(e.target.value)} 
-          style={{ padding: '10px', border: '1px solid #737958', width: '250px' }}
-        />
-        <button 
-          onClick={handleSearch} 
-          style={{ backgroundColor: '#737958', color: 'white', border: 'none', padding: '10px 20px', cursor: 'pointer' }}
-        >
-          Search Archive
-        </button>
+    <div style={{ 
+      backgroundColor: 'white', 
+      padding: '20px', 
+      marginBottom: '20px', 
+      borderRadius: '8px', 
+      boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+      border: '1px solid #737958'
+    }}>
+      {/* 1. Point to the BACKEND port (5000) so the image actually shows up */}
+      <img 
+        src={`http://localhost:5000${record.imageUrl}`} 
+        alt={record.fullName} 
+        style={{ width: '100%', borderRadius: '4px', marginBottom: '15px', display: 'block' }} 
+      />
+      
+      <h3 style={{ color: '#737958', margin: '0 0 10px 0' }}>{record.fullName}</h3>
+      
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', fontSize: '0.9rem' }}>
+        <p><strong>Category:</strong> {record.category}</p>
+        <p><strong>Date:</strong> {record.eventDate}</p>
+        <p><strong>Location:</strong> {record.location}</p>
+        <p><strong>Record Type:</strong> {record.recordType}</p>
       </div>
 
-      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-        {results.map((record) => (
-          <ResultCard key={record._id} record={record} />
-        ))}
-      </div>
+      {record.description && (
+        <div style={{ marginTop: '10px', fontSize: '0.85rem', color: '#555' }}>
+          {record.description}
+        </div>
+      )}
     </div>
   );
 };
 
-export default SearchPage;
+export default ResultCard;
