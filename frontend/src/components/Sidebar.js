@@ -180,7 +180,7 @@ const Sidebar = ({ user, onLogout }) => {
           📰 News & Clippings
         </Link>
         
-        <h3 style={headerStyle}>VITAL RECORDS</h3>
+        <h3 style={headerStyle}> NEWS ABOUT VITAL RECORDS</h3>
         <Link 
           to="/type/Birth" 
           style={linkStyle}
