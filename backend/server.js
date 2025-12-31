@@ -4,7 +4,6 @@ const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-// 1. ADD THESE TWO IMPORTS
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
@@ -15,7 +14,7 @@ require('dotenv').config();
 app.use(cors());
 app.use(express.json());
 
-// 2. CLOUDINARY CONFIG (Uses Environment Variables for Render)
+// Cloudinary Configuration
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -28,7 +27,7 @@ mongoose.connect(mongoURI)
   .then(() => console.log('✅ Database Connected'))
   .catch(err => console.error('❌ Database Error:', err));
 
-// ========== SCHEMAS (Keep your existing schemas here) ==========
+// ========== SCHEMAS ==========
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
@@ -50,14 +49,14 @@ const recordSchema = new mongoose.Schema({
   eventDate: String,
   location: String,
   transcription: String,
-  imageUrl: String, // THIS WILL NOW STORE THE CLOUDINARY URL
+  imageUrl: String,
   pdfSource: String,
   uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   createdAt: { type: Date, default: Date.now }
 });
 const Record = mongoose.model('Record', recordSchema);
 
-// ========== NEW CLOUDINARY STORAGE CONFIG ==========
+// ========== STORAGE CONFIG ==========
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
@@ -65,36 +64,20 @@ const storage = new CloudinaryStorage({
     allowed_formats: ['jpg', 'png', 'jpeg', 'pdf'],
   },
 });
-
 const upload = multer({ storage: storage });
 
-// ========== ROUTES ==========
+// ========== API ROUTES ==========
 
-app.get('/', (req, res) => {
-  res.send('Recuerdos de Honduras API is live!');
-});
-
-// 3. UPDATED UPLOAD ROUTE
+// Upload Route
 app.post('/api/upload-snippet', upload.single('image'), async (req, res) => {
   try {
-    if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded' });
-    }
-
+    if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
     const { fullName, eventDate, location, category, recordType, transcription, pdfSource, userId } = req.body;
-
     const newRecord = new Record({
-      fullName,
-      eventDate,
-      location,
-      category,
+      fullName, eventDate, location, category,
       recordType: recordType || category,
-      transcription,
-      imageUrl: req.file.path, // <--- CLOUDINARY PROVIDES THE FULL URL HERE
-      pdfSource,
-      uploadedBy: userId
+      transcription, imageUrl: req.file.path, pdfSource, uploadedBy: userId
     });
-
     await newRecord.save();
     res.json({ success: true, message: 'Record uploaded successfully!', record: newRecord });
   } catch (err) {
@@ -102,14 +85,11 @@ app.post('/api/upload-snippet', upload.single('image'), async (req, res) => {
   }
 });
 
-// 4. UPDATED DELETE ROUTE (Removed local file system logic)
+// Delete Route
 app.delete('/api/record/:id', async (req, res) => {
   try {
     const record = await Record.findById(req.params.id);
     if (!record) return res.status(404).json({ error: 'Record not found' });
-    
-    // Note: To delete from Cloudinary, you'd use cloudinary.uploader.destroy
-    // For now, we just delete the database entry.
     await Record.findByIdAndDelete(req.params.id);
     res.json({ success: true, message: 'Record deleted successfully' });
   } catch (err) {
@@ -117,20 +97,13 @@ app.delete('/api/record/:id', async (req, res) => {
   }
 });
 
-// ========== MISSING ROUTES ==========
-
-// Admin/User Login
+// Login Route
 app.post('/api/login', async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username, password });
     if (user) {
-      res.json({ 
-        success: true, 
-        username: user.username, 
-        role: user.role, 
-        userId: user._id 
-      });
+      res.json({ success: true, username: user.username, role: user.role, userId: user._id });
     } else {
       res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
@@ -139,7 +112,7 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-// Search/Filter Records
+// Search Route
 app.get('/api/search', async (req, res) => {
   try {
     const { name, category, letter } = req.query;
@@ -147,7 +120,6 @@ app.get('/api/search', async (req, res) => {
     if (name) query.fullName = { $regex: name, $options: 'i' };
     if (category) query.category = category;
     if (letter) query.fullName = { $regex: '^' + letter, $options: 'i' };
-
     const results = await Record.find(query).sort({ createdAt: -1 });
     res.json(results);
   } catch (err) {
@@ -155,19 +127,18 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
+// ========== FRONTEND BRIDGE ==========
 
+// 1. Serve static files (using '..' to climb out of backend folder)
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
 
-
-// 1. Serve the static files from the React app
-app.use(express.static(path.join(__dirname, 'frontend/build')));
-
-// The asterisk now needs a name, like "splat"
+// 2. Handle visual website (Express 5 named wildcard syntax)
 app.get('/*splat', (req, res) => {
   const indexPath = path.join(__dirname, '..', 'frontend', 'build', 'index.html');
   if (fs.existsSync(indexPath)) {
     res.sendFile(indexPath);
   } else {
-    res.send('API is live, but frontend build was not found.');
+    res.send('API is live, but frontend build was not found. Please check Render Build Command.');
   }
 });
 
