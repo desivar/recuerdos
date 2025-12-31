@@ -19,11 +19,12 @@ if (!fs.existsSync('uploads')) {
 }
 
 // MongoDB Connection
-const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/recuerdos'
+// ✅ Correct MongoDB Connection
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/recuerdos';
+
+mongoose.connect(mongoURI)
   .then(() => console.log('✅ Database Connected'))
   .catch(err => console.error('❌ Database Error:', err));
-
-// ========== SCHEMAS ==========
 
 // User Schema (for admin and optional user accounts)
 const userSchema = new mongoose.Schema({
