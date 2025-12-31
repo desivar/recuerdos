@@ -155,10 +155,8 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
-// Get single record by ID
-JavaScript
 
-// --- REPLACE YOUR OLD app.get('/') WITH THIS ---
+
 
 // 1. Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'frontend/build')));
