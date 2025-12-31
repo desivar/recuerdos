@@ -117,7 +117,54 @@ app.delete('/api/record/:id', async (req, res) => {
   }
 });
 
-// ... (Keep your other routes like Search and Login exactly the same) ...
+// ========== MISSING ROUTES ==========
+
+// Admin/User Login
+app.post('/api/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username, password });
+    if (user) {
+      res.json({ 
+        success: true, 
+        username: user.username, 
+        role: user.role, 
+        userId: user._id 
+      });
+    } else {
+      res.status(401).json({ success: false, message: 'Invalid credentials' });
+    }
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// Search/Filter Records
+app.get('/api/search', async (req, res) => {
+  try {
+    const { name, category, letter } = req.query;
+    let query = {};
+    if (name) query.fullName = { $regex: name, $options: 'i' };
+    if (category) query.category = category;
+    if (letter) query.fullName = { $regex: '^' + letter, $options: 'i' };
+
+    const results = await Record.find(query).sort({ createdAt: -1 });
+    res.json(results);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get single record by ID
+app.get('/api/record/:id', async (req, res) => {
+  try {
+    const record = await Record.findById(req.params.id);
+    if (!record) return res.status(404).json({ error: 'Record not found' });
+    res.json(record);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 // ========== SERVER START ==========
 const PORT = process.env.PORT || 5000;
