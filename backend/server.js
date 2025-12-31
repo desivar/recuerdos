@@ -19,7 +19,7 @@ if (!fs.existsSync('uploads')) {
 }
 
 // MongoDB Connection
-const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/recuerdos';
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/recuerdos'
   .then(() => console.log('✅ Database Connected'))
   .catch(err => console.error('❌ Database Error:', err));
 
