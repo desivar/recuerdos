@@ -43,7 +43,7 @@ const recordSchema = new mongoose.Schema({
   fullName: { type: String, required: true },
   category: { 
     type: String, 
-    enum: ['Portrait', 'News', 'Birth', 'Death', 'Marriage'],
+    enum: ['Portrait', 'News', 'News about Birth', 'News about Death', 'News aboutMarriage'],
     required: true 
   },
   recordType: String, // Birth, Death, Marriage (for vital records)
@@ -336,7 +336,6 @@ app.get('/api/stats', async (req, res) => {
 
 // ========== SERVER START ==========
 
-// ========== SERVER START ==========
 
 // process.env.PORT allows Render to tell the app which port to use
 const PORT = process.env.PORT || 5000; 
