@@ -332,13 +332,12 @@ app.get('/api/stats', async (req, res) => {
 
 // ========== SERVER START ==========
 
-const PORT = 5000; 
+// ========== SERVER START ==========
 
-app.listen(PORT, () => {
+// process.env.PORT allows Render to tell the app which port to use
+const PORT = process.env.PORT || 5000; 
+
+// Adding '0.0.0.0' is a common requirement for cloud hosting to accept outside traffic
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 SERVER IS NOW ON PORT: ${PORT}`);
-});
-// Add this temporarily to server.js to see your users
-app.get('/api/debug-users', async (req, res) => {
-  const users = await User.find({}, 'username password role');
-  res.json(users);
 });
