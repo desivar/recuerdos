@@ -156,13 +156,21 @@ app.get('/api/search', async (req, res) => {
 });
 
 // Get single record by ID
-app.get('/api/record/:id', async (req, res) => {
-  try {
-    const record = await Record.findById(req.params.id);
-    if (!record) return res.status(404).json({ error: 'Record not found' });
-    res.json(record);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+JavaScript
+
+// --- REPLACE YOUR OLD app.get('/') WITH THIS ---
+
+// 1. Serve the static files from the React app
+app.use(express.static(path.join(__dirname, 'frontend/build')));
+
+// 2. This handles the visual website
+app.get('*', (req, res) => {
+  const indexPath = path.join(__dirname, 'frontend/build', 'index.html');
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    // If build folder is missing, show this message
+    res.send('API is live, but frontend build was not found. Check your Render build command.');
   }
 });
 
