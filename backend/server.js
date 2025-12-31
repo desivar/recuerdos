@@ -161,14 +161,13 @@ app.get('/api/search', async (req, res) => {
 // 1. Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'frontend/build')));
 
-// 2. This handles the visual website
-app.get('*', (req, res) => {
-  const indexPath = path.join(__dirname, 'frontend/build', 'index.html');
+// The asterisk now needs a name, like "splat"
+app.get('/*splat', (req, res) => {
+  const indexPath = path.join(__dirname, '..', 'frontend', 'build', 'index.html');
   if (fs.existsSync(indexPath)) {
     res.sendFile(indexPath);
   } else {
-    // If build folder is missing, show this message
-    res.send('API is live, but frontend build was not found. Check your Render build command.');
+    res.send('API is live, but frontend build was not found.');
   }
 });
 
