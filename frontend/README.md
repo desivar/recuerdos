@@ -1,38 +1,65 @@
-# Getting Started with Create React App
+🇭🇳 Recuerdos de Honduras - Digital Archive
+Recuerdos de Honduras is a full-stack MERN application designed to archive and categorize historical documents, news clippings, and portraits related to Honduran heritage. The app features a searchable gallery, category filtering, and secure cloud-based image storage.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+🚀 Live Demo
+View the app here: https://recuerdos-4lm3.onrender.com
+✨ Features
+Full-Stack Integration: Built with the MERN (MongoDB, Express, React, Node.js) stack.
 
-## Available Scripts
+Dynamic Search: Filter records by full name, category, or specific surnames.
 
-In the project directory, you can run:
+Cloud Image Hosting: Integrated with Cloudinary for reliable, high-performance image management.
 
-### `npm start`
+Responsive Gallery: A clean, user-friendly interface for browsing historical records.
 
-Recuerdos de Honduras
-The Vision: A full-stack digital archive dedicated to preserving the historical memory of Honduras through newspaper clippings and vital records.
+Historical Categorization: Specific tags for Portraits, Births, Deaths, and Marriages.
 
-The Tech Stack:
+🛠️ Tech Stack
+Frontend: React.js, CSS3.
 
-Frontend: React.js, React Router, Axios (State management and API handling).
+Backend: Node.js, Express.js (v5).
 
-Backend: Node.js, Express.js (RESTful API design).
+Database: MongoDB Atlas.
 
-Database: MongoDB & Mongoose (NoSQL data modeling).
+Storage: Cloudinary API.
 
-Storage: Multer for handling historical image uploads.
+Deployment: Render.
 
-Key Features:
+📦 Installation & Setup
+Clone the repository:
 
-Admin Dashboard: Secure login for authorized users to upload new findings.
+Bash
 
-Dynamic Search: Case-insensitive search engine to find records by surname.
+git clone https://github.com/desivar/recuerdos.git
+Install dependencies:
 
-Categorized Collections: Filters for Births, Deaths, Marriages, and Portraits.
+Bash
+# Install backend dependencies
+cd backend && npm install
+# Install frontend dependencies
+cd ../frontend && npm install
+Environment Variables: Create a .env file in the backend folder with:
 
- Advanced Features that could be done
+MONGO_URI
 
-Cloud Hosting: Transitioning from local storage to MongoDB Atlas and Cloudinary.
+CLOUDINARY_CLOUD_NAME
 
-JWT Authentication: Replacing basic login with JSON Web Tokens for more secure sessions.
+CLOUDINARY_API_KEY
 
-Responsive Design: Making the archive accessible on mobile devices for researchers on the go.
+CLOUDINARY_API_SECRET
+
+Run the app:
+
+Bash
+
+# From the root directory
+npm run build --prefix frontend
+node backend/server.js
+📝 Lessons Learned
+During the development of this project, I successfully navigated several complex deployment challenges:
+
+Express 5 Migration: Updated wildcard routing to comply with the new path-to-regexp requirements (/*splat syntax).
+
+Path Management: Implemented cross-directory static file serving to bridge the Node.js backend with the React build.
+
+URI Encoding: Resolved database connection issues by properly escaping special characters in MongoDB connection strings.
