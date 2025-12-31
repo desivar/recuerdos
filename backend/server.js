@@ -99,6 +99,9 @@ const upload = multer({
 });
 
 // ========== AUTHENTICATION ROUTES ==========
+app.get('/', (req, res) => {
+  res.send('Recuerdos de Honduras API is live!');
+});
 
 // Admin/User Login
 app.post('/api/login', async (req, res) => {
