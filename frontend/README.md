@@ -29,13 +29,7 @@ Dynamic Search: Case-insensitive search engine to find records by surname.
 
 Categorized Collections: Filters for Births, Deaths, Marriages, and Portraits.
 
-Challenges Overcome: Explain how you managed port collisions between the frontend and backend and implemented password hashing for security.
-
-2. Video Script (The "Demo")
-
-
-3. Advanced Features to Mention
-To make it look like a "real" project, mention these upcoming features:
+ Advanced Features that could be done
 
 Cloud Hosting: Transitioning from local storage to MongoDB Atlas and Cloudinary.
 
